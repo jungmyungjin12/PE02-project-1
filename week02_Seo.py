@@ -35,9 +35,9 @@ r_squared = (SSE / SST)
 # 그래프 생성
 plt.subplot(1,2,1)  # 1행 2열중 첫번째에 그래프 생성
 plt.plot(V, abs_I, 'ro', V, abs(p(V)), '-') # 전압 값과 전류 값의 절대값을 포함하는 그래프 생성
-plt.title('IV - analysis') # 그래프 제목 설정
-plt.xlabel('Voltage[V]') # x 축 레이블 설정
-plt.ylabel('Current[A]') # y 축 레이블 설정
+plt.title('IV - analysis', fontdict={'weight': 'bold', 'size':10}) # 그래프 제목 설정
+plt.xlabel('Voltage[V]', labelpad=8 , fontdict={'weight': 'bold', 'size':8}) # x 축 레이블 설정
+plt.ylabel('Current[A]', labelpad=8 , fontdict={'weight': 'bold', 'size':8}) # y 축 레이블 설정
 plt.yscale('logit') # y 축 로그 스케일로 설정
 plt.grid(True) # 그리드 추가
 plt.text(0.02, 0.8, f"R_squared = {r_squared:.20f}", fontsize=10, transform=plt.gca().transAxes) # R_squared 값을 그래프에 표시
@@ -62,9 +62,9 @@ for i in range(len(dcbias_values)):
     if i == len(dcbias_values) - 1:
         plt.plot(wavelength_values[i], IL_values[i], label='ref_0V')
     else:
-        plt.plot(wavelength_values[i], IL_values[i], label=str(dcbias_values[i]))
-        plt.title('Transmission spectrum - as measured')
-plt.xlabel('Wavelength [nm]')   # x 축 레이블 설정
-plt.ylabel('Measured transmission [dB]')    # y 축 레이블 설정
-plt.legend(loc='lower center', ncol = 4)    # 범례 생성 및 위치 지정
+        plt.plot(wavelength_values[i], IL_values[i], label=str(dcbias_values[i])+'v')
+plt.title('Transmission spectrum - as measured', fontdict={'weight': 'bold', 'size':10})
+plt.xlabel('Wavelength [nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})   # x 축 레이블 설정
+plt.ylabel('Measured transmission [dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})    # y 축 레이블 설정
+plt.legend(loc='lower center', ncol=4)    # 범례 생성 및 위치 지정
 plt.show()
