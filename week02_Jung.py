@@ -42,9 +42,9 @@ plt.yticks(fontsize=6)
 # show particular data using text method in mathplotlib library
 plt.text(0.02,0.8,'R_square = {:.15f}'.format(R_square(V,I,data_fitted)),fontsize=8,transform=plt.gca().transAxes)
 # plt.gca().transAxes -> help set up the position of text(x: 0~1, y:0~1)
-plt.text(-2,data_fitted[0]*1.5,'{:.11f}'.format(data_fitted[0]),fontsize=6)
-plt.text(-1,data_fitted[4]*1.5,'{:.11f}'.format(data_fitted[4]),fontsize=6)
-plt.text(1,data_fitted[12]*1.5,'{:.11f}'.format(data_fitted[12]),fontsize=6)
+plt.text(-2,data_fitted[0]*1.5,'{:.11f}A'.format(data_fitted[0]),fontsize=6)
+plt.text(-1,data_fitted[4]*1.5,'{:.11f}A'.format(data_fitted[4]),fontsize=6)
+plt.text(1,data_fitted[12]*1.5,'{:.11f}A'.format(data_fitted[12]),fontsize=6)
 
 # ---------------------------------------------------------------------------------------------------------------------
 plt.subplot(1,2,2) # plot on one GUI (transmission graph)
