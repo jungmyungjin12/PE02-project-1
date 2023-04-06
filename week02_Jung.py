@@ -36,11 +36,12 @@ plt.yscale('logit') # set up y axis scale as log
 plt.xlabel('Voltage[V]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.ylabel('Current[A]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.title('IV analysis', fontdict = {'weight': 'bold', 'size':10})
-plt.legend(loc='upper left',fontsize=7) # 범례 표시
-plt.xticks(fontsize=6) # 축 눈금 레이블 fontsize 설정
+plt.legend(loc='upper left',fontsize=7) # show legend
+plt.xticks(fontsize=6) # modulate axis label's fontsize
 plt.yticks(fontsize=6)
 # show particular data using text method in mathplotlib library
 plt.text(0.02,0.8,'R_square = {:.15f}'.format(R_square(V,I,data_fitted)),fontsize=8,transform=plt.gca().transAxes)
+# plt.gca().transAxes -> help set up the position of text(x: 0~1, y:0~1)
 plt.text(-2,data_fitted[0]*1.5,'{:.11f}'.format(data_fitted[0]),fontsize=6)
 plt.text(-1,data_fitted[4]*1.5,'{:.11f}'.format(data_fitted[4]),fontsize=6)
 plt.text(1,data_fitted[12]*1.5,'{:.11f}'.format(data_fitted[12]),fontsize=6)
@@ -59,13 +60,13 @@ for i in root.iter('WavelengthSweep'): # data parsing using iterator
         plt.plot(wavelength,gain,label='reference(0V)',color=color[temp])
         continue
     plt.plot(wavelength,gain,label=bias+'V',color=color[temp])
-    temp+=1 # color의 다음 index 색으로 바꾸기 위해 변수에 +1
+    temp+=1 # to change color, plus 1 to number of repetition variable
 
 # set up the background of graph
 plt.xlabel('Wavelength[nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.ylabel('Gain[dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.title('Transmission graph', fontdict = {'weight': 'bold', 'size':10})
-plt.legend(ncol=4,loc='lower center',fontsize=5) # 범례 표시
-plt.xticks(fontsize=6) # 축 눈금 레이블 fontsize 설정
+plt.legend(ncol=4,loc='lower center',fontsize=5) # show legend
+plt.xticks(fontsize=6) # modulate axis label's fontsize
 plt.yticks(fontsize=6)
 plt.show() # show graph to user
