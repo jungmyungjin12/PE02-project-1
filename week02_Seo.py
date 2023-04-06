@@ -63,8 +63,8 @@ for i in range(len(dcbias_values)):
         plt.plot(wavelength_values[i], IL_values[i], label='ref_0V')
     else:
         plt.plot(wavelength_values[i], IL_values[i], label=str(dcbias_values[i]))
-        plt.title('Transmission spectrum - as measured')
+plt.title('Transmission spectrum - as measured')
 plt.xlabel('Wavelength [nm]')   # x 축 레이블 설정
 plt.ylabel('Measured transmission [dB]')    # y 축 레이블 설정
-plt.legend(loc='lower center', ncol = 4)    # 범례 생성 및 위치 지정
+plt.legend(loc='lower center', ncol=4)    # 범례 생성 및 위치 지정
 plt.show()
