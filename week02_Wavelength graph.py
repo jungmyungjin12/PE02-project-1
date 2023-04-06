@@ -18,10 +18,10 @@ for i in root.iter('WavelengthSweep'): # iterator를 이용한 parsing
     plt.plot(wavelength,gain,label=bias+'V',color=color[temp])
     temp+=1 # color의 다음 index 색으로 바꾸기 위해 변수에 +1
 
-plt.xlabel('Wavelength(m)', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
-plt.ylabel('Gain(dB)', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
-plt.title('W-G analysis', fontdict = {'weight': 'bold', 'size':10})
-plt.legend(loc='lower right',fontsize=5) # 범례 표시
+plt.xlabel('Wavelength[nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
+plt.ylabel('Gain[dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
+plt.title('Transmission graph', fontdict = {'weight': 'bold', 'size':10})
+plt.legend(ncol=4,loc='lower center',fontsize=5) # 범례 표시
 plt.xticks(fontsize=6) # 축 눈금 레이블 fontsize 설정
 plt.yticks(fontsize=6)
 plt.show()

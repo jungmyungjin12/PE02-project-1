@@ -10,12 +10,15 @@ root = tree.getroot()
 # 'Current' 태그에서 전류 값을 추출하여 리스트로 변환
 for i in root.iter('Current'):
     a = i.text
-I = (list(map(float,a.split(','))))
+I = np.array(list(map(float,a.split(','))))
 
 # 'Voltage' 태그에서 전압 값을 추출하여 리스트로 변환
 for i in root.iter('Voltage'):
     b = i.text
-V = (list(map(float,b.split(','))))
+V = np.array(list(map(float,b.split(','))))
+
+print('Current = ',I)
+print('Voltage = ',V)
 
 # 전류 값의 절대값을 계산
 abs_I = np.abs(I)
