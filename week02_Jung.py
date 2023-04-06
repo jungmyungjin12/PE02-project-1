@@ -24,45 +24,48 @@ for i in root.iter('Current'): # parsing I, V data
 for i in root.iter('Voltage'):
     V=np.array(list(map(float,i.text.split(','))))
 
-plt.subplot(1,2,1) # plot on one GUI
+plt.subplot(1,2,1) # plot on one GUI (regression graph)
 data_fitted=data_fitting(V,I,16) # fitted data using defined function
-plt.plot(V,data_fitted,'k--',label='best-fit')
-plt.plot(V,I,'ro',label='data')
-plt.yscale('logit')
+plt.plot(V,data_fitted,'k--',label='best-fit') # plot approximated graph as a dotted line
+plt.plot(V,I,'ro',label='data') # plot I-V graph as points
+plt.yscale('logit') # set up y axis scale as log
 
 # print('{:.20f}'.format(R_square(V,I,data_fitting(V,I,16))))
 
+# set up background of graph
 plt.xlabel('Voltage[V]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.ylabel('Current[A]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.title('IV analysis', fontdict = {'weight': 'bold', 'size':10})
 plt.legend(loc='upper left',fontsize=7) # 범례 표시
 plt.xticks(fontsize=6) # 축 눈금 레이블 fontsize 설정
 plt.yticks(fontsize=6)
+# show particular data using text method in mathplotlib library
 plt.text(0.02,0.8,'R_square = {:.15f}'.format(R_square(V,I,data_fitted)),fontsize=8,transform=plt.gca().transAxes)
 plt.text(-2,data_fitted[0]*1.5,'{:.11f}'.format(data_fitted[0]),fontsize=6)
 plt.text(-1,data_fitted[4]*1.5,'{:.11f}'.format(data_fitted[4]),fontsize=6)
 plt.text(1,data_fitted[12]*1.5,'{:.11f}'.format(data_fitted[12]),fontsize=6)
 
 # ---------------------------------------------------------------------------------------------------------------------
-plt.subplot(1,2,2)
+plt.subplot(1,2,2) # plot on one GUI (transmission graph)
 
-color=['b','g','r','c','m','y','k'] # 색을 담아놓은 변수
-temp=0 # 색을 바꾸기 위한 임시 변수
+color=['b','g','r','c','m','y','k'] # variable of color
+temp=0 # temporary variable of number of repetition
 
-for i in root.iter('WavelengthSweep'): # iterator를 이용한 parsing
+for i in root.iter('WavelengthSweep'): # data parsing using iterator
     wavelength=np.array(list(map(float,i.find('L').text.split(','))))
     gain=np.array(list(map(float,i.find('IL').text.split(','))))
-    bias=i.attrib['DCBias']
-    if temp==6:
+    bias=i.attrib['DCBias'] # legend of each graph
+    if temp==6: # plot reference graph with another way of naming label
         plt.plot(wavelength,gain,label='reference(0V)',color=color[temp])
         continue
     plt.plot(wavelength,gain,label=bias+'V',color=color[temp])
     temp+=1 # color의 다음 index 색으로 바꾸기 위해 변수에 +1
 
+# set up the background of graph
 plt.xlabel('Wavelength[nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.ylabel('Gain[dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
 plt.title('Transmission graph', fontdict = {'weight': 'bold', 'size':10})
 plt.legend(ncol=4,loc='lower center',fontsize=5) # 범례 표시
 plt.xticks(fontsize=6) # 축 눈금 레이블 fontsize 설정
 plt.yticks(fontsize=6)
-plt.show()
+plt.show() # show graph to user
