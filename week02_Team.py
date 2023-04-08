@@ -63,7 +63,7 @@ for i in range(len(v) - 1):  # v 리스트의 마지막 요소는 REF로 제외�
 
 line, = plt.plot(v[6][0], v[6][1], color='gray', label="REF")  # REF plot을 그립니다.
 
-plt.gca().add_artist(plt.legend(handles=[line], loc='upper right'))  # REF 레이블을 추가합니다.
+plt.gca().add_artist(plt.legend(handles=[line], loc='upper right',fontsize=5))  # REF 레이블을 추가합니다.
 plt.legend(handles=plots, ncol=3, loc="lower center", fontsize=5)  # 나머지 레이블을 추가합니다.
 plt.title("Transmission spectra - as measured", fontdict = {'weight': 'bold', 'size':10})  # 그래프 제목을 설정합니다.
 plt.xlabel('Wavelength [nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})  # x축 레이블을 설정합니다.
