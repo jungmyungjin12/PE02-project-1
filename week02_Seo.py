@@ -62,7 +62,7 @@ for i in range(len(dcbias_values)):
     if i == len(dcbias_values) - 1:
         plt.plot(wavelength_values[i], IL_values[i], label='ref_0V')
     else:
-        plt.plot(wavelength_values[i], IL_values[i], label=str(dcbias_values[i])+'v')
+        plt.plot(wavelength_values[i], IL_values[i], label=str(dcbias_values[i])+'V')
 plt.title('Transmission spectrum - as measured', fontdict={'weight': 'bold', 'size':10})
 plt.xlabel('Wavelength [nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})   # x 축 레이블 설정
 plt.ylabel('Measured transmission [dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})    # y 축 레이블 설정
