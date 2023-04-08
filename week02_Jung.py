@@ -41,10 +41,12 @@ plt.xticks(fontsize=6) # modulate axis label's fontsize
 plt.yticks(fontsize=6)
 # show particular data using text method in mathplotlib library
 plt.text(0.02,0.8,'R_square = {:.15f}'.format(R_square(V,I,data_fitted)),fontsize=8,transform=plt.gca().transAxes)
-# plt.gca().transAxes -> help set up the position of text(x: 0~1, y:0~1)
-plt.text(-2,data_fitted[0]*1.5,'{:.11f}A'.format(data_fitted[0]),fontsize=6)
-plt.text(-1,data_fitted[4]*1.5,'{:.11f}A'.format(data_fitted[4]),fontsize=6)
-plt.text(1,data_fitted[12]*1.5,'{:.11f}A'.format(data_fitted[12]),fontsize=6)
+plt.text(0.02,0.75,'-1V = {:.12f}[A]'.format(data_fitted[4]),fontsize=8,transform=plt.gca().transAxes)
+plt.text(0.02,0.7,'+1V = {:.12f}[A]'.format(data_fitted[12]),fontsize=8,transform=plt.gca().transAxes)
+# plt.gca().transAxes -> help set up the position of text(x: 0~1, y:0~1) 0 4 12
+plt.text(-2,data_fitted[np.where(V==-2)[0][0]]*1.5,'{:.11f}A'.format(data_fitted[0]),fontsize=6)
+plt.text(-1,data_fitted[4]*1.5,'{:.11f}[A]'.format(data_fitted[4]),fontsize=6)
+plt.text(1,data_fitted[12]*1.5,'{:.11f}[A]'.format(data_fitted[12]),fontsize=6)
 
 # ---------------------------------------------------------------------------------------------------------------------
 plt.subplot(1,2,2) # plot on one GUI (transmission graph)
@@ -64,8 +66,8 @@ for i in root.iter('WavelengthSweep'): # data parsing using iterator
 
 # set up the background of graph
 plt.xlabel('Wavelength[nm]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
-plt.ylabel('Gain[dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
-plt.title('Transmission graph', fontdict = {'weight': 'bold', 'size':10})
+plt.ylabel('measured transmission[dB]', labelpad=8 , fontdict={'weight': 'bold', 'size':8})
+plt.title('Transmission spectra - as measured', fontdict = {'weight': 'bold', 'size':10})
 plt.legend(ncol=4,loc='lower center',fontsize=5) # show legend
 plt.xticks(fontsize=6) # modulate axis label's fontsize
 plt.yticks(fontsize=6)
