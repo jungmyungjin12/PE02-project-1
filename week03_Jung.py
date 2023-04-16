@@ -3,12 +3,15 @@ import xml.etree.ElementTree as elemTree
 import matplotlib.pyplot as plt
 import numpy as np
 
+# R_square 값을 반환해주는 함수 정의
 def R_square(X,Y,Y_reg): # R_square 값을 반환하는 함수 정의
     Y_mean=sum(Y)/Y.size # 측정 데이터 Y에 대한 평균값을 가지는 변수
     SST=sum((Y-Y_mean)**2) # 측정 데이터와 평균값 차 제곱의 합
     SSE=sum((Y_reg-Y_mean)**2) # 근사 데이터와 측정 데이터 평균값 차 제곱의 합
     SSR=sum((Y-Y_reg)**2)
     return 1-SSR/SST # R_square 값 반환
+
+# N차 다항식으로 근사했을 때 함수 식 표현
 def polyeq(X,Y,N):
     equation=''
     coef=np.polyfit(X,Y,N)
@@ -28,20 +31,20 @@ def polyeq(X,Y,N):
 #     SSE=sum((Y_reg-Y_mean)**2) # 근사 데이터와 측정 데이터 평균값 차 제곱의 합
 #     return SSE/SST # R_square 값 반환
 
+# XML 파일 객채화를 통한 데이터 파싱 준비
 tree = elemTree.parse("HY202103_D07_(0,0)_LION1_DCM_LMZC.xml") # XML 파일 객체
 root = tree.getroot() # tree에서 root를 가져옮
-
-temp_1=0
-Rs=[]
-plots=[]
-color=['b','g','r','c','m','y','k'] # variable of color
-graph_square=10
-label_fontsize=7
-title_fontsize=9
-legend_fontsize=4.5
-labelpad_size=2
-I=np.array([])
-n=5
+# 사용되는 변수 초기값 설정
+temp_1=0 # 반복되는 횟수를 세기 위한 변수
+Rs=[] # 각 피팅 degree에 대한 R_square를 담는 변수
+plots=[] # label에 대한 문자열들을 담을 변수 -> 추후 handle을 이용한 범례 추가에 쓰임
+color=['b','g','r','c','m','y','k'] # 마커의 색상을 for문에서 반복하면서 사용하기 위해 변수 선언
+graph_square=10 # 다항함수 피팅에 대한 변수
+label_fontsize=7 # label의 폰트 사이즈를 조절하기 위한 변수 초기화(뒤에서 일일이 다 조절할 필요가 없음)
+title_fontsize=9 # title의 폰트 사이즈를 조절하기 위한 변수 초기화
+legend_fontsize=4.5 # legend의 폰트 사이즈를 조절하기 위한 변수 초기화
+labelpad_size=2 # labelpad(간격)을 조절하기 위한 변수 초기화
+n=5 # text의 위치를 조절하는 데에 사용하는 변수
 
 # data parsing
 for i in root.iter('Current'): # IV 데이터 parsing
@@ -83,13 +86,8 @@ plt.text(-2,p(-2)*1.5,'{:.11f}A'.format(p(-2)),fontsize=4) # y좌표에 1.5를 �
 plt.text(-1,p(-1)*1.5,'{:.11f}[A]'.format(p(-1)),fontsize=4)
 plt.text(0.5,p(1)*1.5,'{:.11f}[A]'.format(p(1)),fontsize=4)
 # --------------------------------------------------------------------------------------------
-for k in [2,5]:
+for k in [2,5]: # 피팅 그래프는 plot은 동일하게 진행하기 위해서 for 문을 사용하여 subplot 실행
     plt.subplot(2,3,k)
-
-        # print(Rs[i-1])
-    # print(trans.size)
-    # plt.plot(range(2,graph_square),Rs[1:])
-    # print(max_ind)
 
     line, = plt.plot(wave_len,trans, '.', markersize=0.25, label="raw data")  # REF data plot
     plt.gca().add_artist(plt.legend(handles=[line], loc='upper right',fontsize=5))  # REF 레이블을 추가
@@ -109,7 +107,7 @@ for k in [2,5]:
             plt.text(0.3, 0.45+0.05*i, f'R\u00B2({max_ind+i+1}st)= {Rs[max_ind+i]}', fontsize=5, transform=plt.gca().transAxes)
     else:
         plt.title('Processed and fitting of reference', fontdict={'weight': 'bold', 'size': title_fontsize})
-        plt.text(0.4-0.055*n, 0.45,polyeq(wave_len,trans,n), fontsize=5,transform=plt.gca().transAxes)
+        plt.text(0.35-0.055*n, 0.45,f'f({n}st) = {polyeq(wave_len,trans,n)}', fontsize=5,transform=plt.gca().transAxes)
         plt.text(0.28, 0.36,f'wavelength at Max : {wave_len[np.where(trans==max(trans))[0][0]]}[nm]', fontsize=5,transform=plt.gca().transAxes)
         plt.text(0.28, 0.31,f'wavelength at Min : {wave_len[np.where(trans==min(trans))[0][0]]}[nm]', fontsize=5,transform=plt.gca().transAxes)
 

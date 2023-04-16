@@ -4,8 +4,10 @@ import numpy as np
 from sklearn.metrics import r2_score
 from lmfit import Model
 
-def current(V_D, I_s, n):                           # 쇼클리 다이오드 방정식 정의
-    return I_s*(np.exp((V_D/(n*0.026))-1))
+def current(V_D, I_s, n, T):    # 쇼클리 다이오드 방정식 정의
+    k = 1.380649 * 10**(-23)
+    q = 1.602 * 10**(-19)
+    return I_s*(np.exp(q*V_D/(n*k*T))-1)
 
 xml_file = etree.parse('HY202103_D07_(0,0)_LION1_DCM_LMZC.xml')     # XML 파일 불러오기
 root = xml_file.getroot()           # get root(element) of file
@@ -46,7 +48,7 @@ print(f'r2 = {r2_score(list(map(abs, cur))[:10], fit_eq(vol[:10]))}\n')         
 
 # V_D > 0.25V(threshold voltage)
 Cmodel = Model(current)             # fitting 모델 정의(함수 정의)
-params = Cmodel.make_params(I_s=1e-15, n=1)         # 초기값 세팅(포화 전류)
+params = Cmodel.make_params(I_s=1e-15, n=1, T=300)         # 초기값 세팅(포화 전류)
 result = Cmodel.fit(list(map(abs, cur))[10:], params, V_D=vol[10:])         # fitting 수행
 print(f'result of best values : {result.best_values}')          # best fitting의 매개변수 출력
 print(f'result of best fit : {result.best_fit}')                # fitting 이후 전류 데이터 출력
