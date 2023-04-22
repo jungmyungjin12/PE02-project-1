@@ -15,7 +15,7 @@ def R_square(X,Y,Y_reg): # obtain R square
     SSE=sum((Y_reg-Y_mean)**2) # Residual sum of square ( sum of square of difference between )
     return SSE/SST # return R sqaure
 
-tree = elemTree.parse("data_file/HY202103_D07_(0,0)_LION1_DCM_LMZC.xml") # objectify XML file
+tree = elemTree.parse("HY202103_D07_(0,0)_LION1_DCM_LMZC.xml") # objectify XML file
 root = tree.getroot() # get root from tree
 
 for i in root.iter('Current'): # parsing I, V data
