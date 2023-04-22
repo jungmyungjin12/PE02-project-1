@@ -122,10 +122,11 @@ for k in [2,5]: # 피팅 그래프는 plot은 동일하게 진행하기 위해�
     plt.xticks(fontsize=6) # modulate axis label's fontsize
     plt.yticks(fontsize=6)
 # --------------------------------------------------------------------------------------------------------------------------
-for k in [1, 3]:
+for k in [1, 3]: # 1번째 위치와 3번째 위치에 subplot을 그리는 코드
     plt.subplot(2,3,k)
     temp_2=0
     plots=[]
+    # k(위치)가 1일 때와 3일 때를 나누어서 flat 그래프와 기존 measured transmission 그래프 plot
     for i in root.iter('WavelengthSweep'): # data parsing using iterator
         wavelength=np.array(list(map(float,i.find('L').text.split(','))))
         gain=np.array(list(map(float,i.find('IL').text.split(','))))
@@ -162,5 +163,5 @@ plt.yticks(fontsize=6)
 # 그래프 크기 조절하기
 plt.gcf().set_size_inches(20,5)
 plt.subplots_adjust(wspace=0.3,hspace=0.3)
-# plt.tight_layout()
-plt.show()# show graph to user
+plt.savefig('HY202103_D07_(0,0)_LION1_DCM_LMZC.png') # 그래프 저장
+plt.show()# 그래프를 사용자에게 보여주기
