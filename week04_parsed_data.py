@@ -83,7 +83,7 @@ for file_name in file_names:
         Operator = np.append(Operator, i.attrib['Operator'])
 
 I = I.reshape(len(file_names),data_I_length)
-V = V.reshape(len(file_names),int(I.size/len(file_names)))
+V = V.reshape(len(file_names),data_I_length)
 WL = WL.reshape(len(file_names), int(WL.size/WL_ref.size), data_WL_length)
 TR = TR.reshape(len(file_names), int(WL.size/WL_ref.size), data_WL_length)
 WL_ref = WL_ref.reshape(len(file_names), data_WL_length)
@@ -97,11 +97,11 @@ Analysis_WL = Analysis_WL.reshape(len(file_names),1)
 TestSite = TestSite.reshape(len(file_names),1)
 Name = Name.reshape(len(file_names),1)
 Date = Date.reshape(len(file_names),1)
+Mask_name = Mask_name.reshape(len(file_names),1)
 Operator = Operator.reshape(len(file_names),1)
 Script_id = np.array(list('process '+row[0][-4:-1] for row in TestSite))
 row = row.reshape(len(file_names),1)
 column = column.reshape(len(file_names),1)
-
 
 
 # for wa

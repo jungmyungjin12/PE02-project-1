@@ -16,8 +16,8 @@ Error_dsc = np.array([])
 Script_version = np.array([])
 Script_owner = np.array([])
 Users = {'audwl': 'B1','J Seo' : 'B2,','junjuns' : 'B3','User' : 'B4'}
-name = ['Lot','Wafer','Mask','TestSite','Name','Date','Script ID','Scipt Version','Script Owner','Operator','Row','column'
-        ,'ErrorFlag','Error description','Analysis','Rsq of Ref.spectrum(Nth)','Max_transmission of Ref.spec.(dB)','Rsq of IV','I at -1V[A]','I at 1V']
+name = ['Lot','Wafer','Mask','TestSite','Name','Date','Script ID','Scipt Version','Script Owner','Operator','Row','Column'
+        ,'ErrorFlag','Error description','Analysis Wavelength','Rsq of Ref.spectrum(Nth)','Max_transmission of Ref.spec.(dB)','Rsq of IV','I at -1V[A]','I at 1V']
 
 username = os.environ['USERNAME']
 
@@ -42,9 +42,9 @@ for file_name in file_names:
 '''
 
 for i in range(len(data.WL_ref)):
-    R_max_ref = np.append(R_max_ref, fit.Best_fit_R(data.WL_ref[i],data.TR_ref[i]))
+    R_max_ref = np.append(R_max_ref, np.array(fit.Best_fit_R(data.WL_ref[i],data.TR_ref[i])))
 for i in range(len(data.I)):
-    R_IV = np.append(R_IV, fit.fit_IV_R(data.I[i],data.V[i]))
+    R_IV = np.append(R_IV, np.array(float(fit.fit_IV_R(data.V[i],abs(data.I[i])))))
 
 R_max_ref = R_max_ref.reshape(len(data.file_names),1)
 R_IV = R_IV.reshape(len(data.file_names),1)
@@ -53,6 +53,7 @@ Error_dsc = np.array(list( 'No Error' if x == 0 else 'Ref. spec. Error' for x in
 Script_version = np.full((len(data.file_names),1),count)
 Script_owner = np.full((len(data.file_names),1),Users[username])
 
-# pd.DataFrame([data.Lot,data.Wafer_name,data.Mask_name,data.TestSite,data.Name,data.Script_id,Script_version,data.Operator,data.Row,data.Column
-#               ,Error_flag,data.Analysis_WL,R_max_ref,data.Max_TR_ref,R_IV,data.I_n_1V,data.I_p_1V])
-
+df = pd.DataFrame([data.Lot,data.Wafer_name,data.Mask_name,data.TestSite,data.Name,data.Date,data.Script_id,Script_version,Script_owner,data.Operator,data.row
+                ,data.column,Error_flag,Error_dsc,data.Analysis_WL,R_max_ref,data.Max_TR_ref,R_IV,data.I_n_1V,data.I_p_1V],index=name)
+df = df.transpose()
+df.to_excel('PE02_week04_Result.xlsx',index=False)

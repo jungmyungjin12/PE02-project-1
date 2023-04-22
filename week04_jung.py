@@ -150,11 +150,12 @@ for k in [1, 3]:
         temp_2+=1 # to change color, plus 1 to number of repetition variable
     if k==1:
         plt.legend(handles=plots,ncol=1,loc='lower right',fontsize=legend_fontsize) # show legend
+        plt.ylabel('Measured transmission[dB]', labelpad=labelpad_size,fontdict={'weight': 'bold', 'size': label_fontsize})
     else:
         plt.legend(handles=plots,ncol=1,loc='lower center',fontsize=legend_fontsize,bbox_to_anchor=(1.1, 0)) # show legend
+        plt.ylabel('Flat Measured transmission[dB]', labelpad=labelpad_size,fontdict={'weight': 'bold', 'size': label_fontsize})
 # set up the background of graph
 plt.xlabel('Wavelength[nm]', labelpad=labelpad_size , fontdict={'weight': 'bold', 'size':label_fontsize})
-plt.ylabel('measured transmission[dB]', labelpad=labelpad_size , fontdict={'weight': 'bold', 'size':label_fontsize})
 plt.xticks(fontsize=6) # modulate axis label's fontsize
 plt.yticks(fontsize=6)
 

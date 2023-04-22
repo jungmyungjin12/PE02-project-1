@@ -2,12 +2,11 @@ import xml.etree.ElementTree as elemTree
 import matplotlib.pyplot as plt
 import numpy as np
 
-def R_square(X,Y,Y_reg): # R_square 값을 반환하는 함수 정의
-    Y_mean=sum(Y)/Y.size # 측정 데이터 Y에 대한 평균값을 가지는 변수
-    SST=sum((Y-Y_mean)**2) # 측정 데이터와 평균값 차 제곱의 합
-    SSE=sum((Y_reg-Y_mean)**2) # 근사 데이터와 측정 데이터 평균값 차 제곱의 합
-    SSR=sum((Y-Y_reg)**2)
-    return 1-SSR/SST # R_square 값 반환
+def R_square(X,Y,Y_reg): # obtain R square
+    Y_mean=sum(Y)/Y.size # mean of Current
+    SST=sum((Y-Y_mean)**2) # total sum of square ( sum of square of difference between data and mean )
+    SSE=sum((Y_reg-Y_mean)**2) # Residual sum of square ( sum of square of difference between )
+    return SSE/SST # return R sqaure
 def Best_fit_R(X,Y):
     Rs = []
     for i in range(1,9):
@@ -18,6 +17,7 @@ def Best_fit_R(X,Y):
     max_degree = Rs.index(max(Rs))+1
     return max(Rs)
 def fit_IV_R(X,Y):
-    coef = np.polyfit(X,Y,100)
+    coef = np.polyfit(X,Y,12)
     func = np.poly1d(coef)
-    return R_square(X, Y, func(X))
+    result = R_square(X, Y, func(X))
+    return f'{result:.6f}'
