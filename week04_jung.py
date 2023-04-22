@@ -138,7 +138,7 @@ for k in [1, 3]:
                 plt.title('Transmission spectra - as measured', fontdict={'weight': 'bold', 'size': title_fontsize})
             else:
                 line, = plt.plot(wavelength, gain - ref_gain, label='reference(0V)', color=color[temp_2])
-                plt.gca().add_artist(plt.legend(handles=[line], loc='upper right', fontsize=5))  # REF 레이블을 추가
+                plt.gca().add_artist(plt.legend(handles=[line], loc='upper right', fontsize=5,bbox_to_anchor=(1.3, 1)))  # REF 레이블을 추가
                 plt.title('Flat Transmission spectra - as measured', fontdict={'weight': 'bold', 'size': title_fontsize})
             continue
         if k == 1:
@@ -148,8 +148,10 @@ for k in [1, 3]:
             line2, = plt.plot(wavelength, gain - ref_gain, label=bias + 'V', color=color[temp_2])
             plots.append(line2)
         temp_2+=1 # to change color, plus 1 to number of repetition variable
-    plt.legend(handles=plots,ncol=4,loc='lower center',fontsize=legend_fontsize) # show legend
-
+    if k==1:
+        plt.legend(handles=plots,ncol=1,loc='lower right',fontsize=legend_fontsize) # show legend
+    else:
+        plt.legend(handles=plots,ncol=1,loc='lower center',fontsize=legend_fontsize,bbox_to_anchor=(1.1, 0)) # show legend
 # set up the background of graph
 plt.xlabel('Wavelength[nm]', labelpad=labelpad_size , fontdict={'weight': 'bold', 'size':label_fontsize})
 plt.ylabel('measured transmission[dB]', labelpad=labelpad_size , fontdict={'weight': 'bold', 'size':label_fontsize})
@@ -159,5 +161,5 @@ plt.yticks(fontsize=6)
 # 그래프 크기 조절하기
 plt.gcf().set_size_inches(20,5)
 plt.subplots_adjust(wspace=0.3,hspace=0.3)
-
+# plt.tight_layout()
 plt.show()# show graph to user
