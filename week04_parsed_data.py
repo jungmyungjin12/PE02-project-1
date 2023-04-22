@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
 
+# 변수 설정
 I = np.array([])
 V = np.array([])
 WL = np.array([])
@@ -31,13 +32,14 @@ temp1 = 0
 temp2 = 0
 temp3 = 0
 
-
+# data_file 하위 폴더에 존재하는 모든 xml 파일 이름 추출
 dir_path='data_file'
 file_names = [file for file in os.listdir(dir_path) if file.endswith('.xml')]
+# 모든 data_file에 대하여 data parsing 진행
 for file_name in file_names:
     tree = elemTree.parse(f'data_file/{file_name}')
     root = tree.getroot()
-
+# 전류, 전압 데이터 추출
     for current in root.iter('Current'):
         I = np.append(I, abs(np.array(list(map(float, current.text.split(','))))))
     for voltage in root.iter('Voltage'):
@@ -46,7 +48,7 @@ for file_name in file_names:
     for MD in root.iter('Modulator'):
         if temp1 == 0:
             Name = np.append(Name, [MD.find('DeviceInfo').attrib['Name']])
-
+# WL, TR, DC bias 데이터 추출
         for WL_sweep in MD.iter('WavelengthSweep'):
             if temp1 == 1:
                 WL_ref = np.append(WL_ref, np.array(list(map(float, WL_sweep.find('L').text.split(',')))))
@@ -58,7 +60,7 @@ for file_name in file_names:
             TR = np.append(TR, np.array(list(map(float, WL_sweep.find('IL').text.split(',')))))
             DC_bias.append(WL_sweep.attrib['DCBias'])
         temp1+=1
-
+# TestSiteInfo에서 구할 수 있는 데이터 추출
     for i in root.iter('TestSiteInfo'):
         Lot = np.append(Lot,[i.attrib['Batch']])
         Wafer_name = np.append(Wafer_name,[i.attrib['Wafer']])
@@ -66,7 +68,7 @@ for file_name in file_names:
         TestSite = np.append(TestSite,[i.attrib['TestSite']])
         column = np.append(column,[i.attrib['DieColumn']])
         row = np.append(row,[i.attrib['DieRow']])
-
+# Analysis_WL 데이터 추출
     for i in root.iter('DesignParameters'):
         if temp2 == 0:
             for k in i.iter('DesignParameter'):
@@ -74,14 +76,13 @@ for file_name in file_names:
                     Analysis_WL = np.append(Analysis_WL,[k.text])
                 temp3 += 1
         temp2 += 1
-
-    # date_str =
+# 날짜 data 추출
     for i in root.iter('OIOMeasurement'):
         date_str = i.attrib['CreationDate']
         dt = datetime.strptime(date_str,'%a %b %d %H:%M:%S %Y')
         Date = np.append(Date, dt.strftime('%Y%m%d-%H%M%S'))
         Operator = np.append(Operator, i.attrib['Operator'])
-
+# 적절한 shape으로 데이터 행렬 변환
 I = I.reshape(len(file_names),data_I_length)
 V = V.reshape(len(file_names),data_I_length)
 WL = WL.reshape(len(file_names), int(WL.size/WL_ref.size), data_WL_length)
@@ -102,8 +103,3 @@ Operator = Operator.reshape(len(file_names),1)
 Script_id = np.array(list('process '+row[0][-4:-1] for row in TestSite))
 row = row.reshape(len(file_names),1)
 column = column.reshape(len(file_names),1)
-
-
-# for wa
-# for
-# for
