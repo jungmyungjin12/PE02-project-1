@@ -21,10 +21,10 @@ for waveLengthSweep in root.findall('.//WavelengthSweep'):  # WavelengthSweep �
     waveValues.append(waveLengthSweep.attrib['DCBias'])  # DCBias를 waveValues 리스트의 마지막에 추가합니다.
     v.append(waveValues)  # waveValues 리스트를 v 리스트에 추가합니다.
 
-a = v[6][0]
-b = v[6][1]
-data = []
-df = pd.DataFrame(data, columns=[a, b])
+a = v[6][0] # wavelength 파싱
+b = v[6][1] # transmission [dB] 파싱
+data = []    # 데이터 담을 변수 선언
+df = pd.DataFrame(data, columns=[a, b])  # a,b를 Dataframe을 이용하여 넣음
 df.to_excel('week03_Seo.xlsx', index=True)
 
 for i in root.iter('Current'): # parsing I, V data
@@ -105,6 +105,7 @@ plt.text(0.1,0.6,'maximun wavelength = {:.4f}'.format(maxwave),fontsize=6, trans
 plt.text(0.1,0.5,'minimun wavelength = {:.4f}'.format(minwave),fontsize=6, transform=plt.gca().transAxes)
 plt.text(0.1,0.4,'rsquared9 = {:.10f}'.format(rs[8]),fontsize=6, transform=plt.gca().transAxes)
 plt.text(0.1,0.3,'rsquared10 = {:.10f}'.format(rs[9]),fontsize=6, transform=plt.gca().transAxes)
+
 print(maxwave)
 print(minwave)
 line, = plt.plot(v[6][0], v[6][1], color='gray', label="REF")
