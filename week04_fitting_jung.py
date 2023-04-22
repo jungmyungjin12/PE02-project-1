@@ -1,4 +1,3 @@
-import os
 import xml.etree.ElementTree as elemTree
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,9 +10,14 @@ def R_square(X,Y,Y_reg): # R_square 값을 반환하는 함수 정의
     return 1-SSR/SST # R_square 값 반환
 def Best_fit_R(X,Y):
     Rs = []
-    for i in range(1,9)
-        coef = np.polyfit(X,Y)
+    for i in range(1,9):
+        coef = np.polyfit(X,Y,i)
         func = np.poly1d(coef)
         fitted_data = func(X)
-        Rs.append(X,Y,fitted_data)
-    max_degree = Rs.index(max(Rs))
+        Rs.append(R_square(X,Y,fitted_data))
+    max_degree = Rs.index(max(Rs))+1
+    return max(Rs)
+def fit_IV_R(X,Y):
+    coef = np.polyfit(X,Y,100)
+    func = np.poly1d(coef)
+    return R_square(X, Y, func(X))
